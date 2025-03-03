@@ -158,20 +158,14 @@ document.addEventListener("DOMContentLoaded", function () {
     
         let selectedRating = 0;
     
-        // Function to update star colors
-        function updateStars() {
-            stars.forEach(star => {
-                const starValue = parseInt(star.getAttribute("data-value"));
-                star.classList.toggle("text-yellow-400", starValue <= selectedRating);
-            });
-        }
-    
-        // Handle star selection
+        // Handle star rating selection
         stars.forEach(star => {
             star.addEventListener("click", function () {
                 selectedRating = parseInt(this.getAttribute("data-value"));
                 ratingInput.value = selectedRating;
-                updateStars();
+    
+                // Highlight selected stars
+                stars.forEach(s => s.style.color = s.dataset.value <= selectedRating ? "#facc15" : "#ccc");
             });
         });
     
@@ -191,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
     
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from("reviews")
                 .insert([{ name, rating, comments }]);
     
@@ -203,20 +197,15 @@ document.addEventListener("DOMContentLoaded", function () {
     
             alert("Review submitted successfully!");
             loadReviews();
-    
-            // Reset form fields after submission
             document.getElementById("name").value = "";
             document.getElementById("comments").value = "";
             ratingInput.value = "";
-            selectedRating = 0;
-    
-            // Reset stars visually
-            updateStars();
+            stars.forEach(s => s.style.color = "#ccc"); // Reset stars
         });
     
         // Load reviews from database
         async function loadReviews() {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from("reviews")
                 .select("name, rating, comments, created_at")
                 .order("created_at", { ascending: false });
