@@ -19,10 +19,6 @@ supabaseClient
 
 const { createApp, ref, reactive } = Vue;
 
-function generateBookingReference() {
-    return 'REF-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-}
-
 createApp({
     setup() {        
         const firstName = ref("");
@@ -36,7 +32,6 @@ createApp({
         const totalPayment = ref("₱0");
         const paymentMethod = ref("");
         const deliveryType = ref("");
-        const bookingReference = ref("");
         const address = reactive({
             street: "",
             city: "",
@@ -104,9 +99,6 @@ createApp({
                     return;
                 }
        
-                // Generate booking reference
-                bookingReference.value = generateBookingReference();
-       
                 // Show loading state (optional)
                 console.log('Submitting booking...');
        
@@ -128,8 +120,7 @@ createApp({
                             street_address: address.street,
                             city: address.city,
                             postal_code: address.postalCode,
-                            message: message.value,
-                            booking_reference: bookingReference.value
+                            message: message.value
                         }
                     ])
                     .select();
@@ -151,17 +142,48 @@ createApp({
                 alert(`Error submitting form: ${error.message}`);
             }
         }
-
+       
         function confirmBooking() {
             document.querySelector('.modal h3').textContent = "Booking Confirmed!";
-            document.querySelector('.modal p').innerHTML = `<p class='confirmation-message'>Your booking has been confirmed successfully!<br>Reference Number: ${bookingReference.value}</p>`;
+            document.querySelector('.modal p').innerHTML = "<p class='confirmation-message'>Your booking has been confirmed successfully!</p>"; // Added class here
             document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
+
             document.querySelector('.close-modal-button').addEventListener('click', () => {
                 closeModal();
             });
+
             showConfirmation.value = true;
         }
         
+        
+        function closeModal() {
+            resetForm();
+            showConfirmation.value = false;
+            window.location.href = "index.html";
+        }
+
+        function resetForm() {
+            firstName.value = "";
+            lastName.value = "";
+            contactNumber.value = "";
+            email.value = "";
+            shoeBrandModel.value = "";
+            serviceType.value = "";
+            serviceName.value = "";
+            numItems.value = 1;
+            totalPayment.value = "₱0";
+            paymentMethod.value = "";
+            deliveryType.value = "";
+            address.street = "";
+            address.city = "";
+            address.postalCode = "";
+            message.value = "";
+            agreeToTerms.value = false;
+            serviceOptions.value = [];
+        }
+
+        
+
         return {
             firstName,
             lastName,
@@ -185,7 +207,7 @@ createApp({
             showConfirmation,
             goBack,
             closeModal,
-            bookingReference
         };
+
     }
 }).mount("#app");
