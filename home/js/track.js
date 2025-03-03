@@ -19,32 +19,36 @@ document.getElementById("track-form").addEventListener("submit", async function(
     console.log("Tracking booking for:", { email, reference });
 
     const { data, error } = await supabaseClient
-        .from("status")
-        .select("booking_reference, first_name, last_name, service_name, total_payment, delivery_type, status")
-        .eq("email", email)
-        .eq("booking_reference", reference)
-        .maybeSingle();  // Use maybeSingle() to prevent errors when no data is found
+    .from("status")
+    .select("booking_reference, first_name, last_name, service_name, total_payment, delivery_type, status")
+    .eq("email", email)
+    .eq("booking_reference", reference)
+    .maybeSingle();  // Prevents errors when no data is found
 
-    if (error) {
-        console.error("Supabase error:", error);
-        alert("Error fetching booking details. Please try again.");
-        return;
-    }
+// Log any errors from Supabase  
+if (error) {
+    console.error("Supabase Error:", error.message); // Logs error details in console
+    alert("Error fetching booking details. Please try again.");
+    return;
+}
 
-    if (!data) {
-        alert("No booking found with the provided details.");
-        return;
-    }
+// Debugging: Log the response from Supabase  
+console.log("Supabase Response:", data); 
 
-    console.log("Booking found:", data);
+// Handle case where no booking is found  
+if (!data) {
+    alert("No booking found with the provided details.");
+    return;
+}
 
-    // Ensure elements exist before updating
-    document.getElementById("ref-number")?.textContent = data.booking_reference;
-    document.getElementById("customer-name")?.textContent = `${data.first_name} ${data.last_name}`;
-    document.getElementById("service")?.textContent = data.service_name;
-    document.getElementById("payment")?.textContent = `₱${data.total_payment}`;
-    document.getElementById("delivery")?.textContent = data.delivery_type;
-    document.getElementById("status")?.textContent = data.status;
-    
-    document.getElementById("status-result")?.classList.remove("hidden");
+// Update the page with booking details  
+document.getElementById("ref-number").textContent = data.booking_reference;
+document.getElementById("customer-name").textContent = `${data.first_name} ${data.last_name}`;
+document.getElementById("service").textContent = data.service_name;
+document.getElementById("payment").textContent = `₱${data.total_payment}`;
+document.getElementById("delivery").textContent = data.delivery_type;
+document.getElementById("status").textContent = data.status;
+
+document.getElementById("status-result").classList.remove("hidden");
+
 });
