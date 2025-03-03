@@ -91,10 +91,7 @@ createApp({
             }            
         }
         
-        function generateBookingReference() {
-            return "SM" + Date.now().toString().slice(-6); // Example: SM123456
-        }
-        
+     
         async function submitForm() {
             try {
                 if (!agreeToTerms.value) {
@@ -155,19 +152,29 @@ createApp({
             return true;
         }
         
-        
-       
-        function confirmBooking() {
-            document.querySelector('.modal h3').textContent = "Booking Confirmed!";
-            document.querySelector('.modal p').innerHTML = "<p class='confirmation-message'>Your booking has been confirmed successfully!</p>"; // Added class here
-            document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
 
+        function generateBookingReference() {
+            return "SM" + Date.now().toString().slice(-6); // Example: SM123456
+        }
+        
+        
+        function confirmBooking() {
+            const bookingReference = generateBookingReference();
+            
+            document.querySelector('.modal h3').textContent = "Booking Confirmed!";
+            document.querySelector('.modal p').innerHTML = `
+                <p class='confirmation-message'>Your booking has been confirmed successfully!</p>
+                <p class='reference-number'>Your reference number is: <strong>${bookingReference}</strong></p>
+            `;
+            document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
+        
             document.querySelector('.close-modal-button').addEventListener('click', () => {
                 closeModal();
             });
-
+        
             showConfirmation.value = true;
         }
+        
         
         
         function closeModal() {
