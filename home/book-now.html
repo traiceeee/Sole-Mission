@@ -169,11 +169,27 @@
                             </div>
                         </div>
                     </div>
+
+        
                     
                 </form>
             </div>
         </div>
     </div>
+
+
+    <!-- Booking Confirmation Modal -->
+    <div v-if="showModal" class="modal-overlay">
+        <div class="modal">
+            <h2>Booking Confirmed!</h2>
+            <p class="confirmation-message">Your booking reference: <strong>{{ bookingReference }}</strong></p>
+            <p>Thank you for choosing our service. You will receive a confirmation email shortly.</p>
+            <div class="modal-buttons">
+                <button @click="closeModal">Close</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

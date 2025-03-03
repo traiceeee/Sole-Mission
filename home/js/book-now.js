@@ -40,8 +40,9 @@ createApp({
         });
         const message = ref("");
         const agreeToTerms = ref(false);
-        const showConfirmation = ref(false); 
-        
+        const showModal = ref(false);
+        const bookingReference = ref("");
+
         const serviceOptions = ref([]);
         
         const goBack = () => {
@@ -101,11 +102,11 @@ createApp({
         async function submitForm() {
             try {
                 if (!agreeToTerms.value) {
-                    alert("Please agree to the terms and conditions.");
+                    console.warn("Please agree to the terms and conditions.");
                     return;
                 }
                 
-                const bookingReference = generateBookingReference();
+                bookingReference.value = generateBookingReference();
                 
                 console.log("Submitting booking...");
                 
@@ -128,25 +129,26 @@ createApp({
                             city: address.city,
                             postal_code: address.postalCode,
                             message: message.value,
-                            booking_reference: bookingReference 
+                            booking_reference: bookingReference.value 
                         }
                     ])
                     .select();
                 
                 if (error) {
                     console.error("Supabase Error:", error);
-                    alert(`Error submitting booking: ${error.message}`);
                     return;
                 }
                 
                 console.log("Submission successful:", data);
-                alert(`Your booking is confirmed! Reference: ${bookingReference}`);
-                showConfirmation.value = true;
+                showModal.value = true;
                 
             } catch (error) {
                 console.error("Submission Error:", error);
-                alert(`Error submitting form: ${error.message}`);
             }
+        }
+
+        function closeModal() {
+            showModal.value = false;
         }
         
         return {
@@ -168,7 +170,9 @@ createApp({
             updateServiceNames,
             calculateTotal,
             submitForm,
-            showConfirmation,
+            showModal,
+            bookingReference,
+            closeModal,
             goBack,
         };
     }
