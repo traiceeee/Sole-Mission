@@ -152,11 +152,6 @@ createApp({
             return true;
         }
         
-
-        function generateBookingReference() {
-            return "SM" + Date.now().toString().slice(-6); // Example: SM123456
-        }
-        
         
         function confirmBooking() {
             const bookingReference = generateBookingReference();
