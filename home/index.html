@@ -197,44 +197,43 @@
 
 
     <!-- FEEDBACK Section -->
-    <section id="feedback">
-        <div class="form-wrapper flex justify-center items-center w-full h-screen">
-            <div class="form-container w-[90%] max-w-md bg-white p-6 rounded-lg shadow-lg mx-auto">
-                <h1 style="text-align: center;">Share your FEEDBACK!</h1>
-        
-                <div id="reviewForm" class="mt-4 p-4 border rounded bg-white shadow-md">
-                    <label class="block">Name (Optional):</label>
-                    <input type="text" id="name" class="w-full border rounded p-2 mb-2">
-                    <br>
-                    <br>
-                    <br>
-                    <label class="block">How would you rate our service?</label>
-                    <div class="flex space-x-1 mb-2">
-                        <span class="star cursor-pointer" data-value="1">⭐</span>
-                        <span class="star cursor-pointer" data-value="2">⭐</span>
-                        <span class="star cursor-pointer" data-value="3">⭐</span>
-                        <span class="star cursor-pointer" data-value="4">⭐</span>
-                        <span class="star cursor-pointer" data-value="5">⭐</span>
-                    </div>
-                    <br>
-                    <br>
-                    <label class="block">Comments:</label>
-                    <textarea id="comments" class="w-full border rounded p-2 mb-2"></textarea>
-                    
-                    <div class="button-container">
-                        <button id="submitBtn" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
-                    </div>
-                </div><br>  
-                
+<section id="feedback">
+    <div class="form-wrapper flex justify-center items-center w-full h-screen">
+        <div class="form-container w-[90%] max-w-md bg-white p-6 rounded-lg shadow-lg mx-auto">
+            <h1 class="text-center font-bold text-lg">Share your FEEDBACK!</h1>
+
+            <div id="reviewForm" class="mt-4 p-4 border rounded bg-white shadow-md">
+                <label for="name" class="block font-semibold">Name (Optional):</label>
+                <input type="text" id="name" class="w-full border rounded p-2 mb-4">
+
+                <label class="block font-semibold">How would you rate our service?</label>
+                <div class="flex space-x-1 mb-4">
+                    <span class="star cursor-pointer text-2xl" data-value="1">⭐</span>
+                    <span class="star cursor-pointer text-2xl" data-value="2">⭐</span>
+                    <span class="star cursor-pointer text-2xl" data-value="3">⭐</span>
+                    <span class="star cursor-pointer text-2xl" data-value="4">⭐</span>
+                    <span class="star cursor-pointer text-2xl" data-value="5">⭐</span>
+                </div>
+                <input type="hidden" id="rating">
+
+                <label for="comments" class="block font-semibold">Comments:</label>
+                <textarea id="comments" class="w-full border rounded p-2 mb-4"></textarea>
+
+                <div class="button-container text-center">
+                    <button id="submitBtn" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+                </div>
             </div>
-        </div> 
-        
-        <div class="form-review flex justify-center items-center w-full h-screen">
-            <div class="form-review-container w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">    
-                <div id="reviews" class="mt-4"></div>
-            </div>
-        </div> 
-    </section>
+        </div>
+    </div>
+
+    <div class="form-review flex justify-center items-center w-full h-screen">
+        <div class="form-review-container w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">    
+            <h2 class="text-center font-bold text-lg">Customer Reviews</h2>
+            <div id="reviews" class="mt-4 space-y-4"></div>
+        </div>
+    </div>
+</section>
+
 
     
     
