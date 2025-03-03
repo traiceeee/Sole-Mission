@@ -17,6 +17,7 @@
         <a href="javascript:history.back()" class="back-icon">
             <img src="https://raw.githubusercontent.com/traicyyy/Sole-Mission/main/home/images/back.png" alt="Back">
         </a>
+        
         <h1 class="header-title">BOOKING FORM</h1>
     </header>
 
@@ -130,12 +131,13 @@
                     <div class="terms-box-container">
                         <h3>Terms and Conditions:</h3>
                         <div class="terms-box">
-                            <p><strong>By availing Sole Mission’s Restoration service, you agree to the following terms:</strong></p>
-                            <p>1. You may cancel before the process starts, but any downpayment made is non-refundable once work begins.</p>
-                            <p>2. Sole Mission is not responsible for damages during third-party courier transport.</p>
-                            <p>3. Shoes left unclaimed for 2 months after completion may be disposed of or sold.</p>
-                            <p>4. We take precautions but are not liable for restoration-related damages due to pre-existing conditions.</p>
-                            <p>5. Final results may not be factory-finish.</p>
+                            <p>By availing <strong>Sole Mission’s Restoration service</strong>, you agree to the following terms and conditions:</p>
+                            <p>1. You may cancel the shoe restoration service at any time before the process begins. However, any downpayment made will not be refunded after work has started, as it covers the assessment and materials required for the restoration.</p>
+                            <p>2. Sole Mission is not responsible for any damage or loss that occurs during delivery by a third-party courier service, either to or from our facility. It is the customer’s responsibility to ensure that shoes are properly packed and insured during shipment. We recommend using a reliable courier service with tracking and insurance. <strong>Sole Mission also offers pickup delivery services with a fee, available for a limited area only.</strong></p>
+                            <p>3. If the shoes are not picked up within 2 months from the completion of the restoration, Sole Mission reserves the right to dispose of or sell the shoes without returning the downpayment to the owner. We will notify you before this action is taken.</p>
+                            <p>4. While we take all necessary precautions to protect your shoes, we are not liable for any damage that occurs during the restoration process due to the current condition of the shoes. This includes any pre-existing damage, wear, or fragility that may affect the restoration. However, if damage occurs due to our negligence during the restoration process, we will conduct an investigation and take appropriate corrective actions.</p>
+                            <p>5. While we strive to restore your shoes to their best possible condition, Sole Mission does not guarantee a factory-finish result. The final output may vary due to the existing condition of the shoes and the nature of the restoration process.</p>
+                            <p class="l"><strong>By proceeding with our Shoe Restoration service, you confirm that you understand and agree to the above terms and conditions. If you agree to these terms, please check the box below</strong></p>
                         </div>
                         <div class="terms-container">
                             <input type="checkbox" id="agreeToTerms" v-model="agreeToTerms" required>
@@ -144,21 +146,31 @@
                     </div>
                     
                     <button type="submit">Submit Booking</button>
+                    <div v-if="showConfirmation" class="modal-overlay">
+                        <div class="modal">
+                            <h3>Booking Confirmation</h3>
+                            <p>
+                                <strong>Name:</strong> {{ firstName }} {{ lastName }}<br>
+                                <strong>Contact Number:</strong> {{ contactNumber }}<br>
+                                <strong>Email:</strong> {{ email }}<br>
+                                <strong>Shoe Brand & Model:</strong> {{ shoeBrandModel }}<br>
+                                <strong>Service Type:</strong> {{ serviceType }}<br>
+                                <strong>Service Name:</strong> {{ serviceName }}<br>
+                                <strong>Number of Items:</strong> {{ numItems }}<br>
+                                <strong>Total Payment:</strong> {{ totalPayment }}<br>
+                                <strong>Payment Method:</strong> {{ paymentMethod }}<br>
+                                <strong>Delivery Type:</strong> {{ deliveryType }}<br>
+                                <strong>Address:</strong> {{ address.street }}, {{ address.city }}, {{ address.postalCode }}<br>
+                                <strong>Message:</strong> {{ message }}<br>
+                            </p>
+                            <div class="modal-buttons">
+                                <button @click="confirmBooking">Confirm Booking</button>
+                                <button @click="showConfirmation = false">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </form>
-
-                <!-- Booking Confirmation Modal -->
-    <div v-if="showModal" class="modal-overlay">
-        <div class="modal">
-            <h2>Booking Confirmed!</h2>
-            <p class="confirmation-message">
-                Your booking reference: <strong>{{ bookingReference }}</strong>
-            </p>
-            <p>Thank you for choosing our service. You will receive a confirmation email shortly.</p>
-            <div class="modal-buttons">
-                <button @click="closeModal">Close</button>
-            </div>
-        </div>
-    </div>
             </div>
         </div>
     </div>

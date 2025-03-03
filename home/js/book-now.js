@@ -5,7 +5,6 @@ const supabaseClient = createClient(
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZydWhsa2h0ZGxlaWNpd2FqZndqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA5ODM5OTMsImV4cCI6MjA1NjU1OTk5M30.xLINOQNf4Xqh2uy4HT9E9XX2uvEBXZzQaVtTrn3sl6g'
 );
 
-// Supabase connection test
 supabaseClient
     .from('bookings')
     .select('*')
@@ -21,7 +20,7 @@ supabaseClient
 const { createApp, ref, reactive } = Vue;
 
 createApp({
-    setup() {        
+    setup() {
         const firstName = ref("");
         const lastName = ref("");
         const contactNumber = ref("");
@@ -33,85 +32,29 @@ createApp({
         const totalPayment = ref("₱0");
         const paymentMethod = ref("");
         const deliveryType = ref("");
-        const address = reactive({
-            street: "",
-            city: "",
-            postalCode: ""
-        });
+        const address = reactive({ street: "", city: "", postalCode: "" });
         const message = ref("");
         const agreeToTerms = ref(false);
-        const showModal = ref(false);
+        const showConfirmation = ref(false);
         const bookingReference = ref("");
 
         const serviceOptions = ref([]);
-        
-        const goBack = () => {
-            if (window.history.length > 1) {
-                window.history.back(); 
-            } else {
-                window.location.href = "index.html";  
-            }
-        };
-        
+
         function generateBookingReference() {
-            const timestamp = Date.now().toString();
-            const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            return `BOOK-${timestamp}-${randomNum}`;
+            return 'REF-' + Math.random().toString(36).substr(2, 9).toUpperCase();
         }
 
-        function updateServiceNames() {
-            if (serviceType.value === "Cleaning") {
-                serviceOptions.value = ["Deep Clean", "Sole Unyellowing"];
-            } else if (serviceType.value === "Restoration") {
-                serviceOptions.value = [
-                    "Full Repaint",
-                    "Full Outsole Reglue",
-                    "Full Midsole Reglue",
-                    "Sole Replacement",
-                    "Sole Stitch",
-                    "Partial Repaint",
-                    "Partial Reglue"
-                ];
-            } else {
-                serviceOptions.value = [];
-            }
-        }
-
-        function calculateTotal() {
-            let prices = {
-                Cleaning: {
-                    "Deep Clean": 350,
-                    "Sole Unyellowing": 750                    
-                },
-                Restoration: {
-                    "Full Repaint": 1200,
-                    "Full Outsole Reglue": 1200,
-                    "Full Midsole Reglue": 1500,
-                    "Sole Replacement": 3500,
-                    "Sole Stitch": 300,
-                    "Partial Repaint": 300,
-                    "Partial Reglue": 400                    
-                }                
-            };
-            
-            if (serviceType.value && serviceName.value && prices[serviceType.value] && prices[serviceType.value][serviceName.value]) {
-                totalPayment.value = `₱${prices[serviceType.value][serviceName.value] * numItems.value}`;
-            }            
-        }
-        
         async function submitForm() {
             try {
                 if (!agreeToTerms.value) {
-                    console.warn("Please agree to the terms and conditions.");
+                    alert('Please agree to the terms and conditions');
                     return;
                 }
-                
+
                 bookingReference.value = generateBookingReference();
-                
-                console.log("Submitting booking...");
-                
+
                 const { data, error } = await supabaseClient
-                    .from("bookings")
+                    .from('bookings')
                     .insert([
                         {
                             first_name: firstName.value,
@@ -122,35 +65,44 @@ createApp({
                             service_type: serviceType.value,
                             service_name: serviceName.value,
                             num_items: numItems.value,
-                            total_payment: Number(totalPayment.value.replace("₱", "")),
+                            total_payment: Number(totalPayment.value.replace('₱', '')),
                             payment_method: paymentMethod.value,
                             delivery_type: deliveryType.value,
                             street_address: address.street,
                             city: address.city,
                             postal_code: address.postalCode,
                             message: message.value,
-                            booking_reference: bookingReference.value 
+                            booking_reference: bookingReference.value
                         }
                     ])
                     .select();
-                
+
                 if (error) {
-                    console.error("Supabase Error:", error);
+                    console.error('Supabase Error:', error);
+                    alert(`Error submitting booking: ${error.message}`);
                     return;
                 }
-                
-                console.log("Submission successful:", data);
-                showModal.value = true;
-                
+
+                showConfirmation.value = true;
             } catch (error) {
-                console.error("Submission Error:", error);
+                console.error('Submission Error:', error);
+                alert(`Error submitting form: ${error.message}`);
             }
         }
 
-        function closeModal() {
-            showModal.value = false;
+        function confirmBooking() {
+            document.querySelector('.modal h3').textContent = "Booking Confirmed!";
+            document.querySelector('.modal p').innerHTML = `<p class='confirmation-message'>Your booking has been confirmed successfully!<br>Reference Number: <strong>${bookingReference.value}</strong></p>`;
+            document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
+            document.querySelector('.close-modal-button').addEventListener('click', closeModal);
+            showConfirmation.value = true;
         }
-        
+
+        function closeModal() {
+            showConfirmation.value = false;
+            window.location.href = "index.html";
+        }
+
         return {
             firstName,
             lastName,
@@ -167,13 +119,11 @@ createApp({
             message,
             agreeToTerms,
             serviceOptions,
-            updateServiceNames,
-            calculateTotal,
             submitForm,
-            showModal,
-            bookingReference,
+            confirmBooking,
+            showConfirmation,
             closeModal,
-            goBack,
+            bookingReference
         };
     }
 }).mount("#app");
