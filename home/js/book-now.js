@@ -1,8 +1,8 @@
 // Initialize Supabase client
 const { createClient } = supabase;
 const supabaseClient = createClient(
-    'https://umfamnhqjopxxtovmwsd.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmFtbmhxam9weHh0b3Ztd3NkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA4NTAwNTEsImV4cCI6MjA1NjQyNjA1MX0.YgT0GToWew6lP_noejWbe0FPxmVmHcc9DztbEzmInOs'
+    'https://fruhlkhtdleiciwajfwj.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZydWhsa2h0ZGxlaWNpd2FqZndqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA5ODM5OTMsImV4cCI6MjA1NjU1OTk5M30.xLINOQNf4Xqh2uy4HT9E9XX2uvEBXZzQaVtTrn3sl6g'
 );
 // Add this after your Supabase client initialization
 supabaseClient
