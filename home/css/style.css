@@ -478,50 +478,93 @@ nav ul li a:hover {
 /* FEEDBACK */
 #feedback {
     background: url('https://raw.githubusercontent.com/traicyyy/Sole-Mission/main/home/images/feedback-bg.png') no-repeat center center/cover;
-
 }
 
-.form-container, .reviews-container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.stars {
+.form-wrapper {
     display: flex;
     justify-content: center;
-    cursor: pointer;
+    align-items: center;
+    width: 90%;
+    height: auto; 
+    margin-top: 40px;
+    padding: 20px;
+    margin-left: 36px;
 }
 
-.star {
-    font-size: 2rem;
-    color: #ccc;
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    background: #fafafa;
+    padding: 20px; 
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.star.selected {
-    color: gold;
+.form-review {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: auto; 
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    margin-left: 17px;
+}
+
+.form-review-container {
+    width: 100%;
+    max-width: 1200px; 
+    background: #cae4ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+label, h4 {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 textarea {
     width: 100%;
-    height: 80px;
-    margin-top: 10px;
+    height: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 100px;
 }
 
 button {
-    background: green;
+    background-color: #0c3b7a;
     color: white;
-    padding: 10px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    border-radius: 5px;
+    padding: 10px 20px;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #002766;
+}
 
 
 /* * About Section * */

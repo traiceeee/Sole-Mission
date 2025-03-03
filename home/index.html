@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sole Mission</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/home/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/home/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/home/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -203,30 +203,42 @@
 
     <!-- FEEDBACK Section -->
     <section id="feedback">
-        <div class="form-container">
-            <h1>Share your FEEDBACK!</h1>
-            <label for="name">Name (Optional):</label>
-            <input type="text" id="name">
-            
-            <label>How would you rate our service?</label>
-            <div id="stars" class="stars">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
+        <div class="form-wrapper flex justify-center items-center w-full h-screen">
+            <div class="form-container w-[90%] max-w-md bg-white p-6 rounded-lg shadow-lg mx-auto">
+                <h1 style="text-align: center;">Share your FEEDBACK!</h1>
+        
+                <div id="reviewForm" class="mt-4 p-4 border rounded bg-white shadow-md">
+                    <label class="block">Name (Optional):</label>
+                    <input type="text" id="name" class="w-full border rounded p-2 mb-2">
+                    <br>
+                    <br>
+                    <br>
+                    <label class="block">How would you rate our service?</label>
+                    <div class="flex space-x-1 mb-2">
+                        <span class="star cursor-pointer" data-value="1">⭐</span>
+                        <span class="star cursor-pointer" data-value="2">⭐</span>
+                        <span class="star cursor-pointer" data-value="3">⭐</span>
+                        <span class="star cursor-pointer" data-value="4">⭐</span>
+                        <span class="star cursor-pointer" data-value="5">⭐</span>
+                    </div>
+                    <br>
+                    <br>
+                    <label class="block">Comments:</label>
+                    <textarea id="comments" class="w-full border rounded p-2 mb-2"></textarea>
+                    
+                    <div class="button-container">
+                        <button id="submitBtn" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+                    </div>
+                </div><br>  
+                
             </div>
-            
-            <label for="comments">Comments:</label>
-            <textarea id="comments"></textarea>
-            
-            <button id="submitBtn">Submit</button>
-        </div>
-
-        <div class="reviews-container">
-            <h2>Customer Reviews</h2>
-            <div id="reviews"></div>
-        </div>
+        </div> 
+        
+        <div class="form-review flex justify-center items-center w-full h-screen">
+            <div class="form-review-container w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">    
+                <div id="reviews" class="mt-4"></div>
+            </div>
+        </div> 
     </section>
 
 
