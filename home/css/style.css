@@ -501,6 +501,11 @@ nav ul li a:hover {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.form-title h1, h2 {
+    align-items: center;
+    font-weight: bold;
+}
+
 .form-review {
     display: flex;
     justify-content: center;
@@ -518,6 +523,7 @@ nav ul li a:hover {
     max-width: 1200px; 
     background: #cae4ff;
     padding: 20px;
+    padding-top: 1px;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }

@@ -200,12 +200,14 @@
 <section id="feedback">
     <div class="form-wrapper flex justify-center items-center w-full h-screen">
         <div class="form-container w-[90%] max-w-md bg-white p-6 rounded-lg shadow-lg mx-auto">
-            <h1 class="text-center font-bold text-lg">Share your FEEDBACK!</h1>
+            <h1 class="form-title">Share your FEEDBACK!</h1>
 
             <div id="reviewForm" class="mt-4 p-4 border rounded bg-white shadow-md">
                 <label for="name" class="block font-semibold">Name (Optional):</label>
                 <input type="text" id="name" class="w-full border rounded p-2 mb-4">
-
+                <br>
+                <br>
+                <br>
                 <label class="block font-semibold">How would you rate our service?</label>
                 <div class="flex space-x-1 mb-4">
                     <span class="star cursor-pointer text-2xl" data-value="1">⭐</span>
@@ -215,7 +217,8 @@
                     <span class="star cursor-pointer text-2xl" data-value="5">⭐</span>
                 </div>
                 <input type="hidden" id="rating">
-
+                <br>
+                <br>
                 <label for="comments" class="block font-semibold">Comments:</label>
                 <textarea id="comments" class="w-full border rounded p-2 mb-4"></textarea>
 
@@ -228,7 +231,7 @@
 
     <div class="form-review flex justify-center items-center w-full h-screen">
         <div class="form-review-container w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">    
-            <h2 class="text-center font-bold text-lg">Customer Reviews</h2>
+            <h2 class="form-title">Customer Reviews</h2>
             <div id="reviews" class="mt-4 space-y-4"></div>
         </div>
     </div>
