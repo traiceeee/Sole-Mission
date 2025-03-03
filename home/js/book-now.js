@@ -103,7 +103,7 @@ supabaseClient
                         return;
                     }
             
-                    bookingReference.value = generateBookingReference(); // ✅ Assign generated value
+                    const bookingReference = generateBookingReference(); // Generate a reference number
             
                     console.log('Submitting booking...');
             
@@ -111,7 +111,7 @@ supabaseClient
                         .from('bookings')
                         .insert([
                             {
-                                booking_reference: bookingReference.value, // ✅ Use .value
+                                booking_reference: bookingReference, // Add this field
                                 first_name: firstName.value,
                                 last_name: lastName.value,
                                 contact_number: contactNumber.value,
@@ -133,30 +133,39 @@ supabaseClient
             
                     if (error) {
                         console.error('Supabase Error:', error);
-                        alert(`Error submitting booking: ${error.message}`);
+                        alert(`Error submitting booking: ${error.message}`); // Keep this for errors
                         return;
                     }
             
                     console.log('Submission successful:', data);
-                    alert(`Booking Confirmed! Your reference number is: ${bookingReference.value}`);
+            
+                    // Store the reference number for the modal
                     showConfirmation.value = true;
+                    confirmBooking(bookingReference); // Pass reference to modal
+            
                 } catch (error) {
                     console.error('Submission Error:', error);
-                    alert(`Error submitting form: ${error.message}`);
+                    alert(`Error submitting form: ${error.message}`); // Keep this for errors
                 }
             }
             
-            function confirmBooking() {
+            
+            function confirmBooking(bookingReference) {
                 document.querySelector('.modal h3').textContent = "Booking Confirmed!";
-                document.querySelector('.modal p').innerHTML = 
-                    `<p class='confirmation-message'>Your booking has been confirmed successfully!<br>Reference Number: ${bookingReference.value}</p>`;
+                document.querySelector('.modal p').innerHTML = `<p class='confirmation-message'>
+                    Your booking has been confirmed successfully!<br>
+                    Reference Number: <strong>${bookingReference}</strong>
+                </p>`;
+                
                 document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
-    
+            
                 document.querySelector('.close-modal-button').addEventListener('click', () => {
                     closeModal();
                 });
+            
                 showConfirmation.value = true;
             }
+            
             
             function closeModal() {
                 resetForm();
