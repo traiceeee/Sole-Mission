@@ -91,19 +91,23 @@ createApp({
             }            
         }
         
+        function generateBookingReference() {
+            return "SM" + Date.now().toString().slice(-6); // Example: SM123456
+        }
+        
         async function submitForm() {
             try {
-                // Validation check
                 if (!agreeToTerms.value) {
-                    alert('Please agree to the terms and conditions');
+                    alert("Please agree to the terms and conditions.");
                     return;
                 }
-       
-                // Show loading state (optional)
-                console.log('Submitting booking...');
-       
+        
+                const bookingReference = generateBookingReference(); // Generate reference
+        
+                console.log("Submitting booking...");
+        
                 const { data, error } = await supabaseClient
-                    .from('bookings')
+                    .from("bookings")
                     .insert([
                         {
                             first_name: firstName.value,
@@ -114,34 +118,35 @@ createApp({
                             service_type: serviceType.value,
                             service_name: serviceName.value,
                             num_items: numItems.value,
-                            total_payment: Number(totalPayment.value.replace('₱', '')),
+                            total_payment: Number(totalPayment.value.replace("₱", "")),
                             payment_method: paymentMethod.value,
                             delivery_type: deliveryType.value,
                             street_address: address.street,
                             city: address.city,
                             postal_code: address.postalCode,
-                            message: message.value
+                            message: message.value,
+                            booking_reference: bookingReference // Save the reference
                         }
                     ])
                     .select();
-       
+        
                 if (error) {
-                    console.error('Supabase Error:', error);
-                    if (error.message.includes('row-level security')) {
-                        alert('Authorization error. Please contact support.');
-                    } else {
-                        alert(`Error submitting booking: ${error.message}`);
-                    }
+                    console.error("Supabase Error:", error);
+                    alert(`Error submitting booking: ${error.message}`);
                     return;
                 }
-       
-                console.log('Submission successful:', data);
+        
+                console.log("Submission successful:", data);
+        
+                alert(`Your booking is confirmed! Reference: ${bookingReference}`);
                 showConfirmation.value = true;
+        
             } catch (error) {
-                console.error('Submission Error:', error);
+                console.error("Submission Error:", error);
                 alert(`Error submitting form: ${error.message}`);
             }
         }
+        
        
         function confirmBooking() {
             document.querySelector('.modal h3').textContent = "Booking Confirmed!";
