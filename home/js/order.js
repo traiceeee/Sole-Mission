@@ -5,20 +5,23 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 document.getElementById("order-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const bookingRef = document.getElementById("booking-ref").value.trim();
-    if (!bookingRef) {
-        alert("Please enter a booking reference.");
+    const email = document.getElementById("email").value.trim();
+    const bookingReference = document.getElementById("booking_reference").value.trim();
+
+    if (!email || !bookingReference) {
+        alert("Please enter both your email and booking reference.");
         return;
     }
 
     const { data, error } = await supabase
-        .from("bookings")
+        .from("status")
         .select("*")
-        .eq("booking_reference", bookingRef)
-        .single();
+        .eq("email", email)
+        .eq("booking_reference", bookingReference)
+        .single(); // Ensures only one matching order is returned
 
     if (error || !data) {
-        document.getElementById("order-details").innerHTML = "<p>Booking not found.</p>";
+        document.getElementById("order-details").innerHTML = "<p>Booking not found. Please check your details.</p>";
         return;
     }
 
