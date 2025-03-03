@@ -4,7 +4,8 @@ const supabaseClient = createClient(
     'https://fruhlkhtdleiciwajfwj.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZydWhsa2h0ZGxlaWNpd2FqZndqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA5ODM5OTMsImV4cCI6MjA1NjU1OTk5M30.xLINOQNf4Xqh2uy4HT9E9XX2uvEBXZzQaVtTrn3sl6g'
 );
-// Add this after your Supabase client initialization
+
+// Supabase connection test
 supabaseClient
     .from('bookings')
     .select('*')
@@ -51,6 +52,12 @@ createApp({
             }
         };
         
+        function generateBookingReference() {
+            const timestamp = Date.now().toString();
+            const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `BOOK-${timestamp}-${randomNum}`;
+        }
+
         function updateServiceNames() {
             if (serviceType.value === "Cleaning") {
                 serviceOptions.value = ["Deep Clean", "Sole Unyellowing"];
@@ -91,18 +98,17 @@ createApp({
             }            
         }
         
-     
         async function submitForm() {
             try {
                 if (!agreeToTerms.value) {
                     alert("Please agree to the terms and conditions.");
                     return;
                 }
-        
-                const bookingReference = generateBookingReference(); // Generate reference
-        
+                
+                const bookingReference = generateBookingReference();
+                
                 console.log("Submitting booking...");
-        
+                
                 const { data, error } = await supabaseClient
                     .from("bookings")
                     .insert([
@@ -122,84 +128,27 @@ createApp({
                             city: address.city,
                             postal_code: address.postalCode,
                             message: message.value,
-                            booking_reference: bookingReference // Save the reference
+                            booking_reference: bookingReference 
                         }
                     ])
                     .select();
-        
+                
                 if (error) {
                     console.error("Supabase Error:", error);
                     alert(`Error submitting booking: ${error.message}`);
                     return;
                 }
-        
+                
                 console.log("Submission successful:", data);
-        
                 alert(`Your booking is confirmed! Reference: ${bookingReference}`);
                 showConfirmation.value = true;
-        
+                
             } catch (error) {
                 console.error("Submission Error:", error);
                 alert(`Error submitting form: ${error.message}`);
             }
         }
-
-        function validateContactNumber() {
-            if (!/^(09\d{9})$/.test(contactNumber.value)) {
-                alert("Contact number must start with '09' and be exactly 11 digits.");
-                return false;
-            }
-            return true;
-        }
         
-        
-        function confirmBooking() {
-            const bookingReference = generateBookingReference();
-            
-            document.querySelector('.modal h3').textContent = "Booking Confirmed!";
-            document.querySelector('.modal p').innerHTML = `
-                <p class='confirmation-message'>Your booking has been confirmed successfully!</p>
-                <p class='reference-number'>Your reference number is: <strong>${bookingReference}</strong></p>
-            `;
-            document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
-        
-            document.querySelector('.close-modal-button').addEventListener('click', () => {
-                closeModal();
-            });
-        
-            showConfirmation.value = true;
-        }
-        
-        
-        
-        function closeModal() {
-            resetForm();
-            showConfirmation.value = false;
-            window.location.href = "index.html";
-        }
-
-        function resetForm() {
-            firstName.value = "";
-            lastName.value = "";
-            contactNumber.value = "";
-            email.value = "";
-            shoeBrandModel.value = "";
-            serviceType.value = "";
-            serviceName.value = "";
-            numItems.value = 1;
-            totalPayment.value = "₱0";
-            paymentMethod.value = "";
-            deliveryType.value = "";
-            address.street = "";
-            address.city = "";
-            address.postalCode = "";
-            message.value = "";
-            agreeToTerms.value = false;
-            serviceOptions.value = [];
-        }
-
-        
-
         return {
             firstName,
             lastName,
@@ -219,11 +168,8 @@ createApp({
             updateServiceNames,
             calculateTotal,
             submitForm,
-            confirmBooking,
             showConfirmation,
             goBack,
-            closeModal,
         };
-
     }
 }).mount("#app");
