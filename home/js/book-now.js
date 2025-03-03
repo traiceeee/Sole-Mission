@@ -142,18 +142,22 @@ createApp({
                 alert(`Error submitting form: ${error.message}`);
             }
         }
-       
+
+        function generateBookingReference() {
+            return 'REF-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+
         function confirmBooking() {
             document.querySelector('.modal h3').textContent = "Booking Confirmed!";
-            document.querySelector('.modal p').innerHTML = "<p class='confirmation-message'>Your booking has been confirmed successfully!</p>"; // Added class here
+            document.querySelector('.modal p').innerHTML = `<p class='confirmation-message'>Your booking has been confirmed successfully!<br>Reference Number: ${bookingReference.value}</p>`;
             document.querySelector('.modal-buttons').innerHTML = '<button class="close-modal-button">Close</button>';
 
             document.querySelector('.close-modal-button').addEventListener('click', () => {
                 closeModal();
             });
-
             showConfirmation.value = true;
         }
+       
         
         
         function closeModal() {
