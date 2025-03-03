@@ -211,6 +211,7 @@ createApp({
             showConfirmation,
             goBack,
             closeModal,
+            bookingReference
         };
 
     }
