@@ -145,11 +145,8 @@
                     
                     <button type="submit">Submit Booking</button>
                 </form>
-            </div>
-        </div>
-    </div>
 
-    <!-- Booking Confirmation Modal -->
+                <!-- Booking Confirmation Modal -->
     <div v-if="showModal" class="modal-overlay">
         <div class="modal">
             <h2>Booking Confirmed!</h2>
@@ -159,6 +156,9 @@
             <p>Thank you for choosing our service. You will receive a confirmation email shortly.</p>
             <div class="modal-buttons">
                 <button @click="closeModal">Close</button>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>
