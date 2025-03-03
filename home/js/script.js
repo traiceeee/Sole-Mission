@@ -164,8 +164,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectedRating = parseInt(this.getAttribute("data-value"));
                 ratingInput.value = selectedRating;
     
+                // Reset all stars first
+                stars.forEach(s => s.classList.remove("text-yellow-400"));
+    
                 // Highlight selected stars
-                stars.forEach(s => s.style.color = s.dataset.value <= selectedRating ? "#facc15" : "#ccc");
+                stars.forEach(s => {
+                    if (parseInt(s.getAttribute("data-value")) <= selectedRating) {
+                        s.classList.add("text-yellow-400");
+                    }
+                });
             });
         });
     
@@ -185,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
     
-            const { data, error } = await supabaseClient
+            const { data, error } = await supabase
                 .from("reviews")
                 .insert([{ name, rating, comments }]);
     
@@ -197,15 +204,18 @@ document.addEventListener("DOMContentLoaded", function () {
     
             alert("Review submitted successfully!");
             loadReviews();
+    
+            // Reset form fields
             document.getElementById("name").value = "";
             document.getElementById("comments").value = "";
             ratingInput.value = "";
-            stars.forEach(s => s.style.color = "#ccc"); // Reset stars
+            selectedRating = 0;
+            stars.forEach(s => s.classList.remove("text-yellow-400"));
         });
     
         // Load reviews from database
         async function loadReviews() {
-            const { data, error } = await supabaseClient
+            const { data, error } = await supabase
                 .from("reviews")
                 .select("name, rating, comments, created_at")
                 .order("created_at", { ascending: false });
@@ -237,3 +247,4 @@ document.addEventListener("DOMContentLoaded", function () {
     
         loadReviews();
     });
+    
