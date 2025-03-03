@@ -153,29 +153,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // FEEDBACK SECTION
     document.addEventListener("DOMContentLoaded", function () {
         const stars = document.querySelectorAll(".star");
-        const ratingInput = document.getElementById("rating");
         const submitBtn = document.getElementById("submitBtn");
-    
         let selectedRating = 0;
     
-        // Handle star rating selection
         stars.forEach(star => {
             star.addEventListener("click", function () {
                 selectedRating = parseInt(this.getAttribute("data-value"));
-                ratingInput.value = selectedRating;
-    
-                // Highlight selected stars
-                stars.forEach(s => s.style.color = s.dataset.value <= selectedRating ? "#facc15" : "#ccc");
+                stars.forEach(s => s.classList.toggle("selected", s.dataset.value <= selectedRating));
             });
         });
     
-        // Handle form submission
         submitBtn.addEventListener("click", async function () {
             const name = document.getElementById("name").value.trim();
-            const rating = parseInt(ratingInput.value);
             const comments = document.getElementById("comments").value.trim();
     
-            if (!rating || rating < 1 || rating > 5) {
+            if (!selectedRating) {
                 alert("Please select a rating before submitting.");
                 return;
             }
@@ -185,30 +177,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
     
-            const { data, error } = await supabaseClient
-                .from("reviews")
-                .insert([{ name, rating, comments }]);
+            const { error } = await supabase.from("reviews").insert([{ name, rating: selectedRating, comments }]);
     
             if (error) {
                 console.error("Error submitting review:", error);
-                alert("Failed to submit review. Please try again.");
+                alert("Failed to submit review.");
                 return;
             }
     
             alert("Review submitted successfully!");
-            loadReviews();
             document.getElementById("name").value = "";
             document.getElementById("comments").value = "";
-            ratingInput.value = "";
-            stars.forEach(s => s.style.color = "#ccc"); // Reset stars
+            selectedRating = 0;
+            stars.forEach(s => s.classList.remove("selected"));
+            loadReviews();
         });
     
-        // Load reviews from database
         async function loadReviews() {
-            const { data, error } = await supabaseClient
-                .from("reviews")
-                .select("name, rating, comments, created_at")
-                .order("created_at", { ascending: false });
+            const { data, error } = await supabase.from("reviews").select("name, rating, comments, created_at").order("created_at", { ascending: false });
     
             if (error) {
                 console.error("Error fetching reviews:", error);
@@ -216,16 +202,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
     
             const reviewsContainer = document.getElementById("reviews");
-            reviewsContainer.innerHTML = "";
-    
-            if (data.length === 0) {
-                reviewsContainer.innerHTML = "<p class='text-center text-gray-500'>No reviews yet.</p>";
-                return;
-            }
+            reviewsContainer.innerHTML = data.length ? "" : "<p>No reviews yet.</p>";
     
             data.forEach(review => {
                 const reviewElement = document.createElement("div");
-                reviewElement.classList.add("p-4", "border", "rounded", "shadow-md", "bg-gray-50");
                 reviewElement.innerHTML = `
                     <p><strong>${review.name || "Anonymous"}</strong> (${new Date(review.created_at).toLocaleDateString()})</p>
                     <p>Rating: ${"⭐".repeat(review.rating)}</p>
@@ -237,5 +217,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
         loadReviews();
     });
+    
     
     

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sole Mission</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://traiceeee.github.io/Sole-Mission/favicon-32x32.png">
-
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,6 +44,7 @@
 
     <!-- TAGLINE Section -->
     <section class="image-section"></section>
+
 
 
     <!-- SERVICES Section -->
@@ -158,6 +158,7 @@
     </section>
 
 
+
     <!-- GALLERY Section -->
     <section id="gallery" class="hero hero-services">
         <div class="overlay"></div>
@@ -178,6 +179,8 @@
         </div>
     </section>
 
+
+
     <!-- ABOUT US Section -->
     <section id="about" class="about-section">
         <div class="about-container">
@@ -197,44 +200,34 @@
     </section>
 
 
+
     <!-- FEEDBACK Section -->
-<!-- FEEDBACK Section -->
-<section id="feedback">
-    <div class="form-wrapper flex justify-center items-center w-full h-screen">
-        <div class="form-container w-[90%] max-w-md bg-white p-6 rounded-lg shadow-lg mx-auto">
-            <h1 style="text-align: center; font-weight: bold;">Share your FEEDBACK!</h1> 
-
-            <div id="reviewForm" class="mt-4 p-4 border rounded bg-white shadow-md">
-                <label for="name" class="block font-semibold">Name (Optional):</label>
-                <input type="text" id="name" class="w-full border rounded p-2 mb-4">
-
-                <label class="block font-semibold">How would you rate our service?</label>
-                <div class="flex space-x-1 mb-4">
-                    <span class="star cursor-pointer text-2xl" data-value="1">⭐</span>
-                    <span class="star cursor-pointer text-2xl" data-value="2">⭐</span>
-                    <span class="star cursor-pointer text-2xl" data-value="3">⭐</span>
-                    <span class="star cursor-pointer text-2xl" data-value="4">⭐</span>
-                    <span class="star cursor-pointer text-2xl" data-value="5">⭐</span>
-                </div>
-                <input type="hidden" id="rating">
-
-                <label for="comments" class="block font-semibold">Comments:</label>
-                <textarea id="comments" class="w-full border rounded p-2 mb-4"></textarea>
-
-                <div class="button-container text-center">
-                    <button id="submitBtn" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
-                </div>
+    <section id="feedback">
+        <div class="form-container">
+            <h1>Share your FEEDBACK!</h1>
+            <label for="name">Name (Optional):</label>
+            <input type="text" id="name">
+            
+            <label>How would you rate our service?</label>
+            <div id="stars" class="stars">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
             </div>
+            
+            <label for="comments">Comments:</label>
+            <textarea id="comments"></textarea>
+            
+            <button id="submitBtn">Submit</button>
         </div>
-    </div>
 
-    <div class="form-review flex justify-center items-center w-full h-screen">
-        <div class="form-review-container w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">    
-            <h2 style="text-align: center; font-weight: bold;">Customer Reviews</h2>
-            <div id="reviews" class="mt-4 space-y-4"></div>
+        <div class="reviews-container">
+            <h2>Customer Reviews</h2>
+            <div id="reviews"></div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
