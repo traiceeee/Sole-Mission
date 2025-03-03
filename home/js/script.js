@@ -158,21 +158,20 @@ document.addEventListener("DOMContentLoaded", function () {
     
         let selectedRating = 0;
     
-        // Handle star rating selection
+        // Function to update star colors
+        function updateStars() {
+            stars.forEach(star => {
+                const starValue = parseInt(star.getAttribute("data-value"));
+                star.classList.toggle("text-yellow-400", starValue <= selectedRating);
+            });
+        }
+    
+        // Handle star selection
         stars.forEach(star => {
             star.addEventListener("click", function () {
                 selectedRating = parseInt(this.getAttribute("data-value"));
                 ratingInput.value = selectedRating;
-    
-                // Reset all stars first
-                stars.forEach(s => s.classList.remove("text-yellow-400"));
-    
-                // Highlight selected stars
-                stars.forEach(s => {
-                    if (parseInt(s.getAttribute("data-value")) <= selectedRating) {
-                        s.classList.add("text-yellow-400");
-                    }
-                });
+                updateStars();
             });
         });
     
@@ -205,12 +204,14 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Review submitted successfully!");
             loadReviews();
     
-            // Reset form fields
+            // Reset form fields after submission
             document.getElementById("name").value = "";
             document.getElementById("comments").value = "";
             ratingInput.value = "";
             selectedRating = 0;
-            stars.forEach(s => s.classList.remove("text-yellow-400"));
+    
+            // Reset stars visually
+            updateStars();
         });
     
         // Load reviews from database
@@ -247,4 +248,5 @@ document.addEventListener("DOMContentLoaded", function () {
     
         loadReviews();
     });
+    
     
