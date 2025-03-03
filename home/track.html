@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Booking - Sole Mission</title>
+    <link rel="stylesheet" href="css/track.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Track Your Booking</h2>
+        <form id="track-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            
+            <label for="booking-reference">Booking Reference:</label>
+            <input type="text" id="booking-reference" required>
+            
+            <button type="submit">Track</button>
+        </form>
+        
+        <div id="status-result" class="hidden">
+            <h3>Booking Status</h3>
+            <p><strong>Reference:</strong> <span id="ref-number"></span></p>
+            <p><strong>Name:</strong> <span id="customer-name"></span></p>
+            <p><strong>Service:</strong> <span id="service"></span></p>
+            <p><strong>Total Payment:</strong> <span id="payment"></span></p>
+            <p><strong>Delivery Type:</strong> <span id="delivery"></span></p>
+            <p><strong>Status:</strong> <span id="status"></span></p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="js/track.js"></script>
+</body>
+</html>
