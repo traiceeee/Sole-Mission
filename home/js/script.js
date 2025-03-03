@@ -165,33 +165,39 @@ document.addEventListener("DOMContentLoaded", function () {
     
         submitBtn.addEventListener("click", async function () {
             const name = document.getElementById("name").value.trim();
+            const rating = parseInt(ratingInput.value);
             const comments = document.getElementById("comments").value.trim();
-    
-            if (!selectedRating) {
+            
+            if (!rating || rating < 1 || rating > 5) {
                 alert("Please select a rating before submitting.");
                 return;
             }
-    
+            
             if (!comments) {
                 alert("Please enter your comments.");
                 return;
             }
-    
-            const { error } = await supabase.from("reviews").insert([{ name, rating: selectedRating, comments }]);
-    
+            
+            console.log("Submitting review:", { name, rating, comments });
+        
+            const { data, error } = await supabase
+                .from("reviews")
+                .insert([{ name, rating, comments }]);
+        
             if (error) {
                 console.error("Error submitting review:", error);
-                alert("Failed to submit review.");
+                alert("Failed to submit review. Check console for details.");
                 return;
             }
-    
+        
             alert("Review submitted successfully!");
+            loadReviews();
             document.getElementById("name").value = "";
             document.getElementById("comments").value = "";
-            selectedRating = 0;
-            stars.forEach(s => s.classList.remove("selected"));
-            loadReviews();
+            ratingInput.value = "";
+            stars.forEach(s => s.style.color = "#ccc"); // Reset stars
         });
+        
     
         async function loadReviews() {
             const { data, error } = await supabase.from("reviews").select("name, rating, comments, created_at").order("created_at", { ascending: false });
