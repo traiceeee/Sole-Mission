@@ -146,6 +146,15 @@ createApp({
                 alert(`Error submitting form: ${error.message}`);
             }
         }
+
+        function validateContactNumber() {
+            if (!/^(09\d{9})$/.test(contactNumber.value)) {
+                alert("Contact number must start with '09' and be exactly 11 digits.");
+                return false;
+            }
+            return true;
+        }
+        
         
        
         function confirmBooking() {
