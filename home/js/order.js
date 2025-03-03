@@ -14,11 +14,12 @@ document.getElementById("order-form").addEventListener("submit", async (e) => {
     }
 
     const { data, error } = await supabase
-        .from("status")
-        .select("*")
-        .eq("email", email)
-        .eq("booking_reference", bookingReference)
-        .single(); // Ensures only one matching order is returned
+    .from("status")
+    .select("*")
+    .ilike("email", email)  // Case-insensitive match
+    .eq("booking_reference", bookingReference)
+    .single();
+
 
     if (error || !data) {
         document.getElementById("order-details").innerHTML = "<p>Booking not found. Please check your details.</p>";
